@@ -1,6 +1,10 @@
-import React from 'react'
+import React from 'react';
 
-function TrainingComplianceCard({training,index}) {
+import { useNavigate } from 'react-router-dom';
+
+function TrainingComplianceCard({ training, index }) {
+    const navigate = useNavigate();
+    console.log(training)
     return (
         <li key={index} style={{ textAlign: 'left' }}>
             <h2>{training.title}</h2>
@@ -9,9 +13,11 @@ function TrainingComplianceCard({training,index}) {
             <strong>Attempts:</strong> {training.attempts}<br />
             <strong>Status:</strong> {training.status}<br />
             {training.status === 'pending' && (
-                <button onClick={() => { }}>Attempt Test</button>
+                <button onClick={() => {
+                    navigate(`/quiz/${training.id}`);
+                }}>Attempt Test</button>
             )}
-            {training.status === 'complete' && (
+            {training.status === 'completed' && (
                 <div>
                     <strong>Score:</strong> {training.score}<br />
                     <strong>Completion Date:</strong> {training.completion_date || 'N/A'}

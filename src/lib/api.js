@@ -10,12 +10,17 @@ const handleError = (error) => {
   throw error;
 };
 
+function buildHeaders() {
+  var headers = {}
+  if (AuthService.getToken()) {
+    headers["Authorization"] = `Token ${AuthService.getToken()}`;
+  }
+  return { headers: headers }
+}
 // Function to make a GET request
 export const get = async (endpoint, params = {}) => {
   try {
-    const token = `Token ${AuthService.getToken()}`;
-    console.log(token);
-    const response = await axios.get(`${API_URL}${endpoint}`, { headers: { Authorization: `${token}` },params });
+    const response = await axios.get(`${API_URL}${endpoint}`, { ...buildHeaders(), params });
     return response.data;
   } catch (error) {
     handleError(error);
@@ -25,7 +30,7 @@ export const get = async (endpoint, params = {}) => {
 // Function to make a POST request
 export const post = async (endpoint, data = {}) => {
   try {
-    const response = await axios.post(`${API_URL}${endpoint}`, data);
+    const response = await axios.post(`${API_URL}${endpoint}`, data, { ...buildHeaders() });
     return response.data;
   } catch (error) {
     handleError(error);

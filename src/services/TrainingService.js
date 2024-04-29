@@ -15,5 +15,23 @@ class TrainingService {
 
         }
     }
+
+    async getTrainingComplianceBrief(userId = 1) {
+        try {
+            const response = await get(`compliance/training-compliance-brief/${userId}/`,);
+            return response;
+        } catch (error) {
+
+        }
+    }
+
+    async getTrainingComplianceBriefs() {
+        try {
+            const response = await get("compliance/training-compliance-brief/",);
+            return response;
+        } catch (error) {
+
+        }
+    }
 }
 export default new TrainingService();

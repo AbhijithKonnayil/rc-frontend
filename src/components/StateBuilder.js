@@ -18,7 +18,7 @@ export function Failed() {
 }
 
 export function StateBuilder({ state, successUi, InitialUi = <div>initial</div>, LoadingUi = <Loading />, FailedUi = <Failed /> }) {
-  console.log(`state : ${state}`)
+  //console.log(`state : ${state}`)
   switch (state) {
     case State.initial:
       return InitialUi
