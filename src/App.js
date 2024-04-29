@@ -1,5 +1,6 @@
 import { Route, Routes } from 'react-router-dom';
 import './App.css';
+import AddCurriculum from './modules/AddCurriculam';
 import AssignCurriculum from './modules/AssignCurriculum';
 import QuizResultPage from './modules/QuizResultPage';
 import TakeQuizPage from './modules/TakeQuizPage';
@@ -15,6 +16,7 @@ function App() {
         <Route path="/quiz/:id" element={<PrivateRoute Element={TakeQuizPage} />} />
         <Route path="/quiz-result" element={<PrivateRoute Element={QuizResultPage} />} />
         <Route path="/assign-curriculum" element={<PrivateRoute Element={AssignCurriculum} />} />
+        <Route path="/add-curriculum" element={<PrivateRoute Element={AddCurriculum} />} />
       </Routes>
 
     </div>

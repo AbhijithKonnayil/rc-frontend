@@ -2,7 +2,9 @@ import React from 'react';
 
 const Navigation = () => {
 
-  const navItems = [{ title: "Home", route: "/home", }, { title: "Assign Curriculum", route: "/assign-curriculum", }]
+  const navItems = [{ title: "Home", route: "/home", }, { title: "Assign Curriculum", route: "/assign-curriculum", },
+  { title: "Add Curriculum", route: "/add-curriculum", }
+  ]
   return (
     <div className="flex">
       <div className="w-1/4 bg-gray-200 h-screen">
