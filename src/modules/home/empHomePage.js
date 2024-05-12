@@ -93,6 +93,7 @@ const EmpHomePage = () => {
           <TrainingComplianceCard training={training} key={index} />
         ))}
       </ul>
+     
     </div>
   }
 }

@@ -7,6 +7,7 @@ function TrainingComplianceCard({ training, index }) {
     console.log(training)
     return (
         <li key={index} style={{ textAlign: 'left' }}>
+            <br />
             <h2>{training.title}</h2>
             <p>{training.description}</p>
             <strong>Code:</strong> {training.code}<br />
@@ -23,6 +24,7 @@ function TrainingComplianceCard({ training, index }) {
                     <strong>Completion Date:</strong> {training.completion_date || 'N/A'}
                 </div>
             )}
+
         </li>
     )
 }
