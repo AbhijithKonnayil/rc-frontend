@@ -1,9 +1,8 @@
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import 'react-tabs/style/react-tabs.css';
-import Navigation, { NavigationWrapper } from '../../components/Navigation';
 import { State, StateBuilder } from '../../components/StateBuilder';
+import Navigation, { NavigationWrapper } from '../../components/sidebar/Navigation';
 import TrainingService from '../../services/TrainingService';
-
 const AdminHomePage = () => {
   const [complianceBriefState, setComplianceBriefState] = useState(State.initial);
   const [complianceBriefs, setComplianceBriefs] = useState({});

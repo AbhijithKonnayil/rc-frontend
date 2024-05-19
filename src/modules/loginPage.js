@@ -8,19 +8,21 @@ const LoginPage = () => {
   const [error, setError] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
+  console.log("dsafdsf" + localStorage.getItem("token"))
+  if (localStorage.getItem("token")) { navigate('/home') }
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setIsLoading(true);
     try {
       // Make a POST request to your login API endpoint
-      const data = await AuthService.login( username, password );
+      const data = await AuthService.login(username, password);
       navigate('/home');
     } catch (err) {
       // Handle login error
       setError('Invalid username or password');
       console.error('Login error:', err);
-    } finally { 
+    } finally {
       setIsLoading(false);
     }
   };
@@ -49,8 +51,8 @@ const LoginPage = () => {
             disabled={isLoading}
             className="mb-4"
           />
-          <button 
-            type="submit" 
+          <button
+            type="submit"
             className={`w-full bg-blue-500 text-white p-2 rounded-md ${isLoading ? 'opacity-50 cursor-not-allowed' : 'hover:bg-blue-600'}`}
             disabled={isLoading}
           >

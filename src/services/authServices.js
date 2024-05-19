@@ -1,7 +1,7 @@
 
 import { post } from "../lib/api";
 class AuthService {
-  
+
   async login(username, password) {
     try {
       const res = await post(`auth/login/`, { username, password });
@@ -17,12 +17,10 @@ class AuthService {
   }
 
   logout() {
-  
-  
     localStorage.removeItem('token');
     localStorage.removeItem('userRole');
     localStorage.removeItem('userID');
-   
+
   }
 
   getCurrentUser() {

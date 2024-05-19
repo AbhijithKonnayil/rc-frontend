@@ -1,5 +1,5 @@
 import { default as React, useState } from 'react';
-import { NavigationWrapper } from '../components/Navigation';
+import { NavigationWrapper } from '../components/sidebar/Navigation';
 import CurriculumService from '../services/CurriculumService';
 
 const AddCurriculum = () => {
@@ -18,7 +18,7 @@ const AddCurriculum = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            // Call the service to submit curriculum data
+            console.log(curriculumData)
             await CurriculumService.addCurriculum(curriculumData);
             // Clear form fields after successful submission
             setCurriculumData({

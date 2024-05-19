@@ -1,8 +1,9 @@
 import axios from "axios";
 import AuthService from "../services/authServices";
 
-
-const API_URL = 'http://127.0.0.1:8000/'; // Replace with your API base URL
+const DEV_URL = "https://devapi.rapidcompliance.live/"
+const LOCAL_URL = 'http://127.0.0.1:8000/'
+const API_URL = LOCAL_URL; // Replace with your API base URL
 
 // Function to handle errors
 const handleError = (error) => {

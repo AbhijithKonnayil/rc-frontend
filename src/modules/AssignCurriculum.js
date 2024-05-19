@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import { NavigationWrapper } from '../components/Navigation';
 import { State, StateBuilder } from '../components/StateBuilder';
+import { NavigationWrapper } from '../components/sidebar/Navigation';
 import CurriculumService from '../services/CurriculumService';
 import UserService from '../services/UserService';
 
@@ -73,6 +73,7 @@ const AssignCurriculum = () => {
         try {
             const res = await CurriculumService.assignCurriculums(selectedEmployeeIds, selectedCurriculumIds);
             console.log(res)
+            alert("Curriculm Assigned")
             return res
         } catch (error) {
 

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-
+import './tabbar.css';
 const TabBar = ({ tabs }) => {
   const [activeTab, setActiveTab] = useState(tabs[0]?.id);
 
@@ -13,7 +13,7 @@ const TabBar = ({ tabs }) => {
         {tabs.map((tab) => (
           <button
             key={tab.id}
-            className={tab.id === activeTab ? 'active' : ''}
+            className={`tab-button ${tab.id === activeTab ? 'active' : ''}`}
             onClick={() => handleTabClick(tab.id)}
           >
             {tab.label}
@@ -24,7 +24,7 @@ const TabBar = ({ tabs }) => {
         {tabs.map((tab) => (
           <div
             key={tab.id}
-            className={tab.id === activeTab ? 'tab-panel active' : 'tab-panel'}
+            className={`tab-panel ${tab.id === activeTab ? 'active' : ''}`}
           >
             {tab.content}
           </div>
