@@ -9,43 +9,45 @@ const Navigation = () => {
   const userRole = localStorage.getItem("userRole")
   const empNav = [
     { title: "Home", route: "/home", },
-    { title: "Trainings", route: "/add-curriculum", },
+    { title: "Trainings", route: "/trainings", },
     { title: "Schedule", route: "/schedule", },
     { title: "Analytics", route: "/analytics", },
     { title: "Certifications", route: "/certifications", },
-    { title: "Management", route: "/management", }
+
 
   ]
   const adminNav = [
-    { title: "Home", route: "/home", },
-    { title: "Assign Curriculum", route: "/assign-curriculum", },
-    { title: "Add Curriculum", route: "/add-curriculum", },
-
+    ...["EMP", "MNG"].includes(userRole) ? empNav : [],
+    { title: "Management", route: "/management", },
   ]
   const navItems = userRole == "EMP" ? empNav : adminNav;
   const location = useLocation();
   const navigate = useNavigate();
   return (
-    <div className="sidebar">
-      <div className="logo">
-        <img src="your-logo-url" alt="Logo" /> {/* Replace with your logo URL */}
+    <div className="sidebar flex flex-col h-screen">
+      <div className="logo p-4 text-2xl">{`Hi, ${localStorage.getItem('username').toUpperCase()}`}
       </div>
-      <nav className="nav">
-        <ul>
+      <nav className="nav flex flex-col flex-1 justify-between ">
+        <ul className="flex-1">
           {navItems.map((item, index) => (
             <li
               key={index}
-              className={`nav-item ${location.pathname == item.route ? 'active' : ''}`}
+              className={`nav-item ${location.pathname === item.route ? 'active' : ''}`}
             >
               <a href={item.route}>{item.title}</a>
             </li>
-
           ))}
         </ul>
-        <button onClick={() => { authServices.logout(); navigate("/"); }} >Logout</button>
-
+        <button onClick={() => {
+          authServices.logout().then(() => {
+            navigate("/");
+          });
+        }} className="m-4 bg-red-500 text-white p-2 rounded">
+          Logout
+        </button>
       </nav>
     </div>
+
   );
 }
 
@@ -57,7 +59,7 @@ export function NavigationWrapper({ Child }) {
         <div className="">
           <Navigation />
         </div>
-        <div className="flex-1 px-8 py-4  ">
+        <div className="flex-1 px-8 py-4 flex flex-col h-screen">
           {Child}
         </div>
       </div>

@@ -16,11 +16,16 @@ class TrainingService {
         }
     }
 
-    async getTrainingComplianceBrief(userId = 1) {
+    async getTrainingComplianceBrief() {
         try {
+            const userId = localStorage.getItem('userID')
             const response = await get(`compliance/training-compliance-brief/${userId}/`,);
+            console.log("response")
+            console.log(response)
             return response;
         } catch (error) {
+            console.log("error")
+            console.log(error)
 
         }
     }

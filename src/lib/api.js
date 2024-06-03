@@ -8,6 +8,9 @@ const API_URL = LOCAL_URL; // Replace with your API base URL
 // Function to handle errors
 const handleError = (error) => {
   console.error('API Error:', error);
+  if (error.response.status == 401) {
+    AuthService.logout()
+  }
   throw error;
 };
 

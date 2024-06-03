@@ -8,7 +8,8 @@ class AuthService {
       console.log(res)
       localStorage.setItem('token', res.token);
       localStorage.setItem('userRole', res.userRole);
-      localStorage.setItem('userID', res.userRole);
+      localStorage.setItem('userID', res.id);
+      localStorage.setItem('username', res.username);
       console.log('Login successful:', res);
       return res;
     } catch (error) {
@@ -16,7 +17,7 @@ class AuthService {
     }
   }
 
-  logout() {
+  async logout() {
     localStorage.removeItem('token');
     localStorage.removeItem('userRole');
     localStorage.removeItem('userID');
@@ -24,6 +25,7 @@ class AuthService {
   }
 
   getCurrentUser() {
+
     const user = localStorage.getItem('token');
     if (user) {
       return user;

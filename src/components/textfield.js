@@ -1,10 +1,11 @@
 import React from 'react';
 
-const TextField = ({ label, type, value, onChange, placeholder, disabled, className }) => {
+const TextField = ({ label, type, name, value, onChange, placeholder, disabled, className }) => {
   return (
-    <div className={`mb-4 ${className}`}>
+    <div className={`${className}`}>
       {label && <label htmlFor={label} className="block text-sm font-medium text-gray-600">{label}</label>}
       <input
+        name={name}
         type={type}
         id={label}
         value={value}

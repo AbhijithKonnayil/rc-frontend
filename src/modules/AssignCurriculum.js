@@ -1,116 +1,142 @@
 import React, { useEffect, useState } from 'react';
+import ScrollSection from '../components/ScrollSection';
 import { State, StateBuilder } from '../components/StateBuilder';
+import HeadingRow from '../components/heading-row/HeadingRow';
 import { NavigationWrapper } from '../components/sidebar/Navigation';
 import CurriculumService from '../services/CurriculumService';
 import UserService from '../services/UserService';
 
+import ScrollBodyInNavWrapper from '../components/ScrollBodyInNavWrapper';
 const AssignCurriculum = () => {
     const [state, setState] = useState(State.initial);
     const [curriculum, setCurriculum] = useState([]);
     const [employee, setEmployee] = useState([]);
     const [selectedCurriculum, setSelectedCurriculum] = useState({});
     const [selectedEmployees, setSelectedEmployees] = useState({});
-    useEffect(() => { getData() }, [])
-    return (<NavigationWrapper Child={<StateBuilder state={state} successUi={<SuccessUi />} />} />);
+
+    useEffect(() => {
+        getData();
+    }, []);
+
     return (
+        <NavigationWrapper
+            Child={
+                <StateBuilder
+                    state={state}
+                    successUi={
+                        <ScrollBodyInNavWrapper child={
+                            <div>
+                                <HeadingRow heading={'Assign Curriculum'} />
+                                <SuccessUi />
+                            </div>}
+                        />
+                    }
+                />
+            }
+        />
+    );
 
-
-        <div>
-            <div>AssignCurriculum</div>
-            <StateBuilder state={state} successUi={<SuccessUi />} />
-        </div>
-
-    )
     async function getData() {
         try {
             const res = await getEmployees();
             const curriculum = await getCurriculum();
-            console.log(curriculum)
-            setEmployee(res)
-            setCurriculum(curriculum)
-            setState(State.success)
+            console.log(curriculum);
+            setEmployee(res);
+            setCurriculum(curriculum);
+            setState(State.success);
         } catch (e) { }
     }
 
     async function getEmployees() {
         try {
             const res = await UserService.getEmployees();
-            return res
-        } catch (error) {
-
-        }
+            return res;
+        } catch (error) { }
     }
-
 
     async function getCurriculum() {
         try {
             const res = await CurriculumService.getCurriculum();
-            return res
-        } catch (error) {
-
-        }
+            return res;
+        } catch (error) { }
     }
+
     function handleCurriculumCheckboxChange(curriculumId) {
-        setSelectedCurriculum(prevState => ({
+        console.log("handleCurriculumCheckboxChange");
+        setSelectedCurriculum((prevState) => ({
             ...prevState,
-            [curriculumId]: !prevState[curriculumId]
+            [curriculumId]: !prevState[curriculumId],
         }));
     }
 
     function handleEmployeeCheckboxChange(empId) {
-        setSelectedEmployees(prevState => ({
+        console.log("handleEmployeeCheckboxChange");
+        setSelectedEmployees((prevState) => ({
             ...prevState,
-            [empId]: !prevState[empId]
+            [empId]: !prevState[empId],
         }));
     }
+
     async function onAssignCurriculum() {
-        const selectedCurriculumIds = Object.keys(selectedCurriculum).filter(id => selectedCurriculum[id]);
-        const selectedEmployeeIds = Object.keys(selectedEmployees).filter(id => selectedEmployees[id]);
+        const selectedCurriculumIds = Object.keys(selectedCurriculum).filter(
+            (id) => selectedCurriculum[id]
+        );
+        const selectedEmployeeIds = Object.keys(selectedEmployees).filter(
+            (id) => selectedEmployees[id]
+        );
 
         // Perform further actions with selectedCurriculumIds, such as submitting to backend
         console.log("Selected Curriculum IDs:", selectedCurriculumIds);
         console.log("Selected Emp IDs:", selectedEmployeeIds);
         try {
-            const res = await CurriculumService.assignCurriculums(selectedEmployeeIds, selectedCurriculumIds);
-            console.log(res)
-            alert("Curriculm Assigned")
-            return res
-        } catch (error) {
-
-        }
-
+            const res = await CurriculumService.assignCurriculums(
+                selectedEmployeeIds,
+                selectedCurriculumIds
+            );
+            console.log(res);
+            alert("Curriculum Assigned");
+            return res;
+        } catch (error) { }
     }
 
     function SuccessUi() {
-        if (employee.length == 0) {
-            return <div>No Employee</div>
+        if (employee.length === 0) {
+            return <div>No Employee</div>;
         }
-        return (<div className="grid grid-cols-2 gap-4">
-            <ul className="list-none p-2 border rounded shadow-sm">
-                {employee.length == 0 ? 'No Curriculum' : ' Curriculum'}
-                {curriculum.map((c, index) => (
-                    <li key={index} className="flex items-center">
-                        <input type="checkbox" className="mr-2" checked={selectedCurriculum[c.id]}
-                            onChange={() => handleCurriculumCheckboxChange(c.id)} />
-                        {c.name}
-                    </li>
-                ))}
-            </ul>
-            <ul className="list-none p-2 border rounded shadow-sm">
-                {employee.length == 0 ? 'No Employee' : ' Employee'}
-                {employee.map((emp, index) => (
-                    <li key={index} className="flex items-center">
+        return (
+            <div className="flex-1 flex-col flex ">
+                <div className="flex-1 text-center">
+                    <div className="flex flex-1">{/* 3 cols */}
+                        <ScrollSection
+                            title={'Curriculum'}
+                            list={curriculum}
+                            selectedItem={selectedCurriculum}
+                            handleCheckboxChange={handleCurriculumCheckboxChange}
+                            displayTextFun={(e) => { return e.name }}
+                        />
 
-                        <input type="checkbox" className="ml-2 mr-2" checked={selectedEmployees[emp.id]}
-                            onChange={() => handleEmployeeCheckboxChange(emp.id)} />
-                        {emp.id} {emp.username}
-                    </li>
-                ))}
-            </ul>
-            <button onClick={onAssignCurriculum}>Submit</button>
-        </div>);
+                        <ScrollSection
+                            title={'Employee'}
+                            list={employee}
+                            selectedItem={selectedEmployees}
+                            handleCheckboxChange={handleEmployeeCheckboxChange}
+                            displayTextFun={(e) => { return `${e.id} ${e.username}` }}
+
+                        />
+
+                        <div className="basis-1/5 p-4">
+                            <button onClick={onAssignCurriculum} className="w-full p-2 bg-gray-900 text-white rounded">
+                                Submit
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        );
     }
 
-}
 
-export default AssignCurriculum
+};
+
+export default AssignCurriculum;
+

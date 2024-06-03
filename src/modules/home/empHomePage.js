@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Tab, TabList, TabPanel, Tabs } from 'react-tabs';
 import 'react-tabs/style/react-tabs.css';
+import PageWrapper from '../../components/PageWrapper';
 import { State, StateBuilder } from '../../components/StateBuilder';
 import TrainingComplianceCard from '../../components/TrainingCompliaceCard';
 import HeadingRow from '../../components/heading-row/HeadingRow';
@@ -16,9 +17,9 @@ const EmpHomePage = () => {
   useEffect(() => { getTraining() }, [])
   useEffect(() => { getTrainingComplianceBrief() }, [])
   const trainingTabs = [
-    { id: 'all', label: 'All', content: <StateBuilder state={state} successUi={<SuccessUi trainings={trainings.allTraining} />} /> },
     { id: 'due', label: 'Due', content: <StateBuilder state={state} successUi={<SuccessUi trainings={trainings.pendingTraining} />} /> },
     { id: 'completed', label: 'Completed', content: <StateBuilder state={state} successUi={<SuccessUi trainings={trainings.completedTraining} />} /> },
+    { id: 'all', label: 'Training History', content: <StateBuilder state={state} successUi={<SuccessUi trainings={trainings.allTraining} />} /> },
   ];
 
   const Card = ({ title, value, withProgress = false }) => {
@@ -42,6 +43,29 @@ const EmpHomePage = () => {
       </div>
     );
   };
+
+  return (<PageWrapper PageHeading="Home" state={complianceBriefState} successUi={<div className="">
+    <div>
+      <div className='flex'>
+        <TabBar tabs={trainingTabs} />
+        <div>
+          <StateBuilder state={complianceBriefState} successUi={<div>
+            <div className="flex flex-col gap-4">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <Card title="Average Attempts" value={avg_attempts} />
+                <Card title="Average Score" value={avg_score} />
+                <Card title="User" value={user} />
+                <Card title="Total Trainings" value={total_trainings} />
+                <Card title="Completed Trainings" value={completed_trainings} withProgress={(completed_trainings / total_trainings) * 100} />
+              </div>
+            </div>
+          </div>} />
+        </div>
+      </div>
+
+
+    </div>
+  </div>} />);
   return (<NavigationWrapper Child={<StateBuilder state={complianceBriefState} successUi={
     <div className="">
       <div>
@@ -65,23 +89,6 @@ const EmpHomePage = () => {
 
 
       </div>
-      {/*  <Tabs>
-        <TabList>
-          <Tab>All Trainings</Tab>
-          <Tab>Pending</Tab>
-          <Tab>Completed</Tab>
-        </TabList>
-
-        <TabPanel>
-          <StateBuilder state={state} successUi={<SuccessUi trainings={trainings.allTraining} />} />
-        </TabPanel>
-        <TabPanel>
-          <StateBuilder state={state} successUi={<SuccessUi trainings={trainings.pendingTraining} />} />
-        </TabPanel>
-        <TabPanel>
-          <StateBuilder state={state} successUi={<SuccessUi trainings={trainings.completedTraining} />} />
-        </TabPanel>
-      </Tabs> */}
     </div>
   } />} />);
   return (
@@ -142,6 +149,8 @@ const EmpHomePage = () => {
     setComplianceBriefState(State.loading);
     try {
       const complianceBrief = await TrainingService.getTrainingComplianceBrief();
+      console.log("complianceBrief")
+      console.log(complianceBrief)
       setComplianceBrief(complianceBrief)
       setComplianceBriefState(State.success);
       console.log(complianceBrief);

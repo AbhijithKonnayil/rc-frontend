@@ -8,6 +8,7 @@
     display: flex;
     border-bottom: 0px;
     margin-bottom: 20px;
+
 }
 
 .tab-button {
@@ -22,11 +23,12 @@
 }
 
 .tab-button.active {
+
     background-color: #ff6700;
     /* Orange background for active tab */
     color: #fff;
     font-weight: bold;
-    border-radius: 4px;
+    border-radius: 999px;
 }
 
 .tab-content {

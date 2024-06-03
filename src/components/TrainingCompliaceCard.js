@@ -1,4 +1,5 @@
 import React from 'react';
+import '../styles.css';
 
 import { useNavigate } from 'react-router-dom';
 
@@ -10,19 +11,25 @@ function TrainingComplianceCard({ training, index }) {
             <div className="bg-gray-200 rounded-lg shadow-lg p-6 m-4">
                 <h2 className="text-xl font-semibold">{training.title}[  {training.code}] </h2>
                 <p className="text-gray-700">{training.description}</p>
-                <div className="mt-4">
-
+                <div className="mt-4 debug" >
                     <strong>Attempts:</strong> {training.attempts}<br />
                     <strong>Status:</strong> {training.status}<br />
                     {training.status === 'pending' && (
-                        <button
-                            className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mt-2"
-                            onClick={() => {
-                                navigate(`/quiz/${training.id}`);
-                            }}
-                        >
-                            Attempt Test
-                        </button>
+                        <div className='flex justify-end'>
+                            <a href={training.training_material}
+                                target='_blank'
+                                className="button mr-4">
+                                Launch
+                            </a>
+                            <button
+                                className="button"
+                                onClick={() => {
+                                    navigate(`/quiz/${training.id}`);
+                                }}
+                            >
+                                Test Knowledge
+                            </button>
+                        </div>
                     )}
                     {training.status === 'completed' && (
                         <div>

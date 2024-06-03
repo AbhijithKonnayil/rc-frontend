@@ -8,12 +8,12 @@ const TabBar = ({ tabs }) => {
   };
 
   return (
-    <div className="tab-bar">
+    <div className="tab-bar  flex-1">
       <div className="tab-buttons">
         {tabs.map((tab) => (
           <button
             key={tab.id}
-            className={`tab-button ${tab.id === activeTab ? 'active' : ''}`}
+            className={`tab-button  ${tab.id === activeTab ? 'active' : ''}`}
             onClick={() => handleTabClick(tab.id)}
           >
             {tab.label}

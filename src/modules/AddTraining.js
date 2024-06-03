@@ -4,13 +4,14 @@ import { State, StateBuilder } from '../components/StateBuilder';
 import HeadingRow from '../components/heading-row/HeadingRow';
 import { NavigationWrapper } from '../components/sidebar/Navigation';
 import TextField from '../components/textfield';
-import CurriculumService from '../services/CurriculumService';
-const AddCurriculum = () => {
-    const [curriculumData, setCurriculumData] = useState({
+import TrainingService from '../services/TrainingService';
+
+const AddTraining = () => {
+    const [trainingData, setTrainingData] = useState({
         name: '',
         description: ''
     });
-    const [curriculums, setCurriculums] = useState([]);
+    const [trainings, setTrainings] = useState([]);
     const [state, setState] = useState(State.initial);
     useEffect(() => {
         getData();
@@ -20,21 +21,21 @@ const AddCurriculum = () => {
     async function getData() {
         try {
             const curriculums = await getCurriculum();
-            setCurriculums(curriculums);
+            setTrainings(curriculums);
             setState(State.success);
         } catch (e) { }
     }
 
     async function getCurriculum() {
         try {
-            const res = await CurriculumService.getCurriculum();
+            const res = await TrainingService.getTrainings();
             return res;
         } catch (error) { }
     }
     const handleChange = (e) => {
         const { name, value } = e.target;
-        console.log(curriculumData)
-        setCurriculumData(prevData => ({
+        console.log(trainingData)
+        setTrainingData(prevData => ({
             ...prevData,
             [name]: value
         }));
@@ -43,10 +44,10 @@ const AddCurriculum = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            console.log(curriculumData);
-            await CurriculumService.addCurriculum(curriculumData);
+            console.log(trainingData);
+            await CurriculumService.addCurriculum(trainingData);
             // Clear form fields after successful submission
-            setCurriculumData({
+            setTrainingData({
                 name: '',
                 description: ''
             });
@@ -73,7 +74,7 @@ const AddCurriculum = () => {
                             type="text"
                             id="name"
                             name="name"
-                            value={curriculumData.name}
+                            value={trainingData.name}
                             onChange={handleChange}
                             required
                             className=""
@@ -87,7 +88,7 @@ const AddCurriculum = () => {
                         <TextField
                             id="description"
                             name="description"
-                            value={curriculumData.description}
+                            value={trainingData.description}
                             onChange={handleChange}
                             required
                             className=""
@@ -118,7 +119,7 @@ const AddCurriculum = () => {
                             successUi={
                                 <ScrollSection
                                     title={'Curriculum'}
-                                    list={curriculums}
+                                    list={trainings}
                                     displayTextFun={(e) => { return e.name }}
                                 />}
                         />
@@ -166,4 +167,4 @@ const ScrollSection = ({ title, list, displayTextFun }) => {
     );
 }
 
-export default AddCurriculum;
+export default AddTraining;
