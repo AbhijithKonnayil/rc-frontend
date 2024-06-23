@@ -26,9 +26,12 @@ const CalendarBox = ({ date }) => {
             }}
             tileClassName="border-2 border-rose-500 "
             tileContent={({ activeStartDate, date, view }) => {
-              const dateExists = dueDates.some(
-                (item) => item.due_date.getDate() === date.getDate()
-              );
+              const dateExists = dueDates.some((item) => {
+                return (
+                  item.due_date.getDate() === date.getDate() &&
+                  item.due_date.getMonth() === date.getMonth()
+                );
+              });
               console.log(
                 dueDates.filter((item) => {
                   const x = item.due_date.getDate() === selectedDate.getDate();

@@ -46,11 +46,11 @@ const EmpHomePage = () => {
                 <ul className="marker:text-green list-outside list-disc ml-6">
                   {pendingTraining.map((t) => (
                     <li className="text-red-500 text-3xl">
-                      <div className="flex text-black text-base">
-                        <Moment format="DD MMMM" className="font-semibold">
+                      <div className="flex text-black text-base items-center">
+                        <Moment format="DD MMMM" className="font-semibold w-28">
                           {t.due_date}
                         </Moment>
-                        <div className="text-2xl font-thin px-2">|</div>
+                        <span className="text-2xl font-thin px-2">|</span>
                         <div className="">{t.title}</div>
                       </div>
                     </li>
