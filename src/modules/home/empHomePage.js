@@ -47,7 +47,7 @@ const EmpHomePage = () => {
                   {pendingTraining.map((t) => (
                     <li className="text-red-500 text-3xl">
                       <div className="flex text-black text-base items-center">
-                        <Moment format="DD MMMM" className="font-semibold w-28">
+                        <Moment format="DD MMM" className="font-semibold w-14">
                           {t.due_date}
                         </Moment>
                         <span className="text-2xl font-thin px-2">|</span>
@@ -77,18 +77,7 @@ const EmpHomePage = () => {
         <>
           <a href="/schedule">
             <div className="mb-8">
-              <CalendarBox
-                value={date}
-                tileContent={({ activeStartDate, date, view }) =>
-                  view === "month" && date.getDay() === 0 ? (
-                    <div className="flex justify-center ">
-                      <div className="bg-red-800 w-1 h-1 rounded-full"> </div>
-                    </div>
-                  ) : (
-                    <div className=" w-1 h-1 "></div>
-                  )
-                }
-              />
+              <CalendarBox value={date} />
             </div>
           </a>
 
