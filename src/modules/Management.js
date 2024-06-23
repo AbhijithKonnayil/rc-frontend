@@ -5,7 +5,7 @@ import { NavigationWrapper } from '../components/sidebar/Navigation';
 const Management = () => {
     const navigate = useNavigate();
     const menuOptions = [{ title: "Add Curriculum", route: "/add-curriculum" },
-    { title: "Add Training", route: "/" },
+    { title: "Add Training", route: "/add-training" },
     { title: "Assign Curriculum", route: "/assign-curriculum" }]
 
     return (<NavigationWrapper Child={<div>

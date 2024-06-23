@@ -1,17 +1,14 @@
-import React from 'react'
+import React from "react";
 
 const ListBuilder = ({ dataList, noItemText, itemCard }) => {
-
-    console.log(itemCard)
-    if (dataList.length == 0) {
-        return <div>{noItemText}</div>
-    }
-    return <div>
-        <ul>
-            {dataList.map(itemCard)}
-        </ul>
-
+  if (dataList.length == 0) {
+    return <div className="">{noItemText}</div>;
+  }
+  return (
+    <div>
+      <ul className="">{dataList.map(itemCard)}</ul>
     </div>
-}   
+  );
+};
 
-export default ListBuilder
+export default ListBuilder;

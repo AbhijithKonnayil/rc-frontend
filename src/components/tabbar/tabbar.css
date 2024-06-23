@@ -4,10 +4,9 @@
     border-radius: 8px;
 }
 
-.tab-buttons {
+.tab-buttondfs {
     display: flex;
     border-bottom: 0px;
-    margin-bottom: 20px;
 
 }
 
@@ -31,8 +30,8 @@
     border-radius: 999px;
 }
 
-.tab-content {
-    padding: 20px;
+.tab-contentdf {
+    padding: 0px;
     background-color: #fff;
     border: 0px solid #ddd;
     border-radius: 0 0 8px 8px;

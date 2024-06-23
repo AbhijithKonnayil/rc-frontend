@@ -2,9 +2,9 @@ import React, { useState } from 'react';
 import PageWrapper from '../components/PageWrapper';
 import { State } from '../components/StateBuilder';
 
-const Certifications = () => {
+const Schedule = () => {
     const [state, setState] = useState(State.success);
-    return (<PageWrapper PageHeading="Certifications" state={state} successUi={<div className="">
+    return (<PageWrapper PageHeading="Schedule" state={state} successUi={<div className="">
         <div>
             <div className='flex'>
 
@@ -15,4 +15,4 @@ const Certifications = () => {
     </div>} />);
 }
 
-export default Certifications
+export default Schedule

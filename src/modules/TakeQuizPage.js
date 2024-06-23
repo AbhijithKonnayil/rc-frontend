@@ -13,21 +13,28 @@ function TakeQuizPage() {
     useEffect(() => { getQuiz() }, [])
 
     const handleAnswerChange = (questionId, selectedOption) => {
+        console.log(`selectedOption ${selectedOption} ,`)
         setAnswers(prevAnswers => ({
             ...prevAnswers,
             [questionId]: selectedOption
         }));
+        console.log(answers)
     };
     const q = quiz[currentQuestion];
     if (q) {
+        console.log(currentQuestion)
         return (
-            <div className='p-10'>
-                <div>TakeQuiz {id}</div>
+            <div className='m-auto p-10 w-2/4 flex flex-col h-screen'>
+                <div className='fle'>TakeQuiz {id}</div>
                 < QuestionCard q={q} handleAnswerChange={handleAnswerChange} selectedOption={answers[q.id]} />
-                {currentQuestion > 0 ?
-                    <button className='bg-gray-600 px-10 py-2 rounded-md' onClick={() => setCurrentQuestion(currentQuestion - 1)}>Previous</button> : <></>}
-                <button className='bg-gray-600 px-10 py-2 rounded-md' onClick={() => setCurrentQuestion(currentQuestion + 1)}>next</button>
-                <button onClick={onSubmit}>submit</button>
+                <div className='flex justify-between flex'>
+                    {currentQuestion > 0 ?
+                        <button className='button' onClick={() => setCurrentQuestion(currentQuestion - 1)}>Previous</button> : <div className='w-40	'></div>}
+
+                    <button className='button' onClick={onSubmit}>Submit</button>{currentQuestion < quiz.length - 1 ?
+                        <button className='button' onClick={() => setCurrentQuestion(currentQuestion + 1)}>Next</button> : <div className='w-40	'></div>}
+                </div>
+
             </div>
         );
     } return (<div>loading</div>);
@@ -47,7 +54,7 @@ function TakeQuizPage() {
             setQuiz(quizWithOptions)
             setCurrentQuestion(0)
         } catch (error) {
-            console.log(error);
+            // console.log(error);
         }
     }
 
@@ -58,7 +65,7 @@ function TakeQuizPage() {
                 answer: answers[key]
             }));
             const res = await QuizService.submitAnswer(id, ans)
-            console.log(res);
+            // console.log(res);
             navigate("/quiz-result", { state: res })
         } catch (error) {
             Dialogs.showAlert(error);
@@ -67,13 +74,14 @@ function TakeQuizPage() {
 }
 
 function QuestionCard({ q, handleAnswerChange, selectedOption, key }) {
-    console.log(q.id)
-    return (<div className='p-10'>
+    console.log(selectedOption)
+    return (<div className='p-10 flex-1'>
         <p className='text-left'>{q.question_text}</p>
         <div className="max-w-xl mx-auto my-5 p-5">
             {q.options.map((e) => (
                 <div key={e.id} className={`option flex items-center my-2 p-5 rounded-md  ${selectedOption == e.value ? 'bg-orange-400' : 'bg-orange-100'}`}>
                     <input
+                        checked={e.value === selectedOption}
                         type="radio"
                         value={e.value}
                         name={q.id}
@@ -81,7 +89,7 @@ function QuestionCard({ q, handleAnswerChange, selectedOption, key }) {
                         onChange={() => handleAnswerChange(q.id, e.value)}
                         className="mr-2 transform scale-150 accent-orange-600"
                     />
-                    <label htmlFor={`${q.id}-a`} className="text-lg cursor-pointer">{e.label}</label></div>
+                    <label htmlFor={`${q.id}`} className="text-lg cursor-pointer">{e.label}</label></div>
             ))}</div></div>);
 }
 
